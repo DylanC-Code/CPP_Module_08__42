@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:59:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/09/04 09:54:19 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/09/04 10:18:53 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <algorithm>
+#include <vector>
 
 class Span
 {
@@ -43,6 +44,14 @@ public:
 
 	// Member Functions
 	void addNumber(int number);
+
+	template <typename InputIterator>
+	void addNumbers(InputIterator start, InputIterator end)
+	{
+		for (; start != end; start++)
+			this->addNumber(*start);
+	}
+
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
 };

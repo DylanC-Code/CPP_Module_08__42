@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:11:38 by dcastor           #+#    #+#             */
-/*   Updated: 2025/09/04 10:00:23 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/09/04 10:20:38 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,22 @@
 
 int main()
 {
-	Span a(10);
+	Span sp = Span(10);
+	std::vector<int> vec;
+
+	vec.push_back(12);
+	vec.push_back(-42);
+	vec.push_back(42);
+
 	try
 	{
-		a.addNumber(1);
-		a.addNumber(6);
-		a.addNumber(8);
-		a.addNumber(20);
-		std::cout << a.shortestSpan() << std::endl;
-		std::cout << a.longestSpan() << std::endl;
+
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumbers(vec.begin(), vec.end());
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
 	}
 	catch (const std::exception &e)
 	{
