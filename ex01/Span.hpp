@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 11:59:47 by dcastor           #+#    #+#             */
-/*   Updated: 2025/09/04 10:18:53 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/09/04 10:28:21 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include <cstdlib>
 #include <algorithm>
 #include <vector>
+#include <limits>
 
 class Span
 {
 private:
-	int *_values;
-	unsigned int _size;
+	std::vector<int> _values;
 	unsigned int _max_size;
 
 	class MaxSizeReachedException : public std::exception

@@ -6,7 +6,7 @@
 /*   By: dcastor <dcastor@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 09:28:06 by dcastor           #+#    #+#             */
-/*   Updated: 2025/09/04 10:17:07 by dcastor          ###   ########.fr       */
+/*   Updated: 2025/09/04 10:33:23 by dcastor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,50 @@
 
 // Canonical Form
 
-Span::~Span()
-{
-	delete[] this->_values;
-}
+Span::~Span() {};
 
 // Custom Constructors
 
-Span::Span(unsigned int max_size) : _size(0), _max_size(max_size)
+Span::Span(unsigned int max_size) : _max_size(max_size)
 {
-	this->_values = new int[max_size]();
+	this->_values.reserve(max_size);
 }
 
 // Member functions
 
 void Span::addNumber(int number)
 {
-	if (this->_size == this->_max_size)
+	if (this->_values.size() >= this->_max_size)
 		throw MaxSizeReachedException();
-	this->_values[this->_size] = number;
-	this->_size++;
+	this->_values.push_back(number);
 }
 
 unsigned int Span::shortestSpan() const
 {
-	unsigned long shortest = -1;
-
-	if (this->_size <= 1)
+	if (this->_values.size() < 2)
 		throw NoSpanCanBeFoundException();
-	for (size_t i = 0; i < this->_size; i++)
-		for (size_t j = i + 1; j < this->_size; j++)
-		{
-			unsigned int minus = std::min(this->_values[i], this->_values[j]);
-			unsigned int maxus = std::max(this->_values[i], this->_values[j]);
-			unsigned int diff = maxus - minus;
-			if (diff < shortest)
-				shortest = diff;
-		}
-	return shortest;
+
+	std::vector<int> tmp = this->_values;
+	std::sort(tmp.begin(), tmp.end());
+
+	long best = std::numeric_limits<long>::max();
+	for (std::size_t i = 1; i < tmp.size(); ++i)
+	{
+		long diff = static_cast<long>(tmp[i]) - static_cast<long>(tmp[i - 1]);
+		if (diff < best)
+			best = diff;
+	}
+	return best;
 }
 
 unsigned int Span::longestSpan() const
 {
-	unsigned long longest = 0;
-	if (this->_size <= 1)
+	if (this->_values.size() < 2)
 		throw NoSpanCanBeFoundException();
-	for (size_t i = 0; i < this->_size; i++)
-		for (size_t j = i + 1; j < this->_size; j++)
-		{
-			unsigned int minus = std::min(this->_values[i], this->_values[j]);
-			unsigned int maxus = std::max(this->_values[i], this->_values[j]);
-			unsigned int diff = maxus - minus;
-			if (diff > longest)
-				longest = diff;
-		}
+	std::vector<int>::const_iterator minIt = std::min_element(_values.begin(), _values.end());
+	std::vector<int>::const_iterator maxIt = std::max_element(_values.begin(), _values.end());
 
-	return longest;
+	return *maxIt - *minIt;
 }
 
 // Internal Exceptions
